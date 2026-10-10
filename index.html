@@ -175,7 +175,7 @@
             border: 1px solid var(--border-glass);
             border-radius: 16px;
             padding: 16px;
-            min-height: 110px;
+            min-height: 130px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -187,6 +187,32 @@
             line-height: 1.5;
             color: #f1d3fe;
             margin-bottom: 10px;
+        }
+
+        /* Poll Options Styling for Would You Rather */
+        .poll-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .poll-btn {
+            background: rgba(157, 78, 221, 0.2);
+            border: 1px solid var(--border-glass);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .poll-btn:hover {
+            background: rgba(157, 78, 221, 0.4);
+            border-color: var(--neon-pink);
         }
 
         .card-actions {
@@ -275,6 +301,7 @@
                 <div class="output-text" id="chaosOutput">
                     "Loading ultimate Indian internet chaos..."
                 </div>
+                <div id="pollArea"></div>
                 <div class="card-actions">
                     <button class="mini-tool-btn" id="copyChaosBtn">📋 Copy</button>
                     <button class="mini-tool-btn" id="favChaosBtn">⭐ Save</button>
@@ -312,7 +339,6 @@
     </div>
 
     <script>
-        // Default Embedded Database (Guaranteed Working)
         let allMemesData = {
             school: [
                 "Backbencher ki superpower: Bina ek bhi shabd padhe viva me full confidence ke sath examiner ko convince karna.",
@@ -344,9 +370,84 @@
             ]
         };
 
-        let currentCategory = 'all';
+        const gamePromptsDatabase = {
+            'Random Chaos': [
+                "Chaos 1: Aaj bina kisi wajah ke ghar walo ke saamne hasna start karo aur unka reaction dekho!",
+                "Chaos 2: Kisi random dost ko call karo aur bolo 'Bhai wo baat kisi ko mat batana' aur call kat do!",
+                "Chaos 3: Mirror ke samne khade hokar 1 minute tak bina blink kiye khud ko dekho.",
+                "Chaos 4: Apne kisi group me 'Guys hume baat karni chahiye...' likho aur offline ho jao.",
+                "Chaos 5: Fridge khol kar bolo 'Aaj phir kuch nahi hai' chahe wo pura bhara ho.",
+                "Chaos 6: Apne phone ki ringtone badal kar koi suspense sound laga lo.",
+                "Chaos 7: Aaj subah uthte hi sabse pehle 5 baar zor se bolo 'Main Hero Hoon!'.",
+                "Chaos 8: Apne best friend ko ek mysterious wala emoji 🗿 bhejo aur kuch mat bolo.",
+                "Chaos 9: Apne status par likho 'Big news coming soon...' aur 24 ghante tak shaant raho.",
+                "Chaos 10: Aaj pure din me har baat ke baad bolo 'Par isme mera kya fayda?'"
+            ],
+            'Personality Test': [
+                "Result: Tumhara vibe 90% 'Professional Overthinker' aur 10% 'Chalta Hai' attitude wala hai!",
+                "Result: Tum 100% Backbencher Mindset ke ho—Kaam aakhri 5 minute me hi hota hai!",
+                "Result: Tumhara Vibe: 'Aalsi Genius'—Dimaag bahut hai par bed se uthne ka mann nahi karta.",
+                "Result: Tum 80% Meme Addict aur 20% Normal Insaan ho!",
+                "Result: Personality: 'Social Battery 2%'—Ghar baith kar reel dekhna hi asli sukoon hai.",
+                "Result: Vibe Check: Tumhara attitude 'Dekha Jayega' par chal raha hai!",
+                "Result: Tum Main Character Energy rakhte ho, bas budget thoda kam hai!",
+                "Result: Tumhare andar ka Detective hamesha doosron ki Insta stalk karne me busy rehta hai.",
+                "Result: Personality: 'Night Owl'—Raat ko 3 baje poori duniya jeetne ka plan banate ho.",
+                "Result: Tum ek Walking Entertainment Center ho, doston ki jaan ho!"
+            ],
+            'Would You Rather': [
+                { type: 'poll', title: "Saari zindagi sirf maggi khana", optionA: "🍔 Haa, bas maggi hi maggi!", optionB: "❌ Nahi bhai, roti sabji chahiye!" },
+                { type: 'poll', title: "Har roz subah 5 baje uthna", optionA: "🌅 Done, healthy lifestyle!", optionB: "🛌 Na baba na, dopahar tak sona hai!" },
+                { type: 'poll', title: "Apni saari search history mummy ko dikhana", optionA: "💀 Seedha yamraj ke paas jaunga", optionB: "🔍 Kuch bhi nahi chhupana!" },
+                { type: 'poll', title: "1 saal tak bina internet ke rehna", optionA: "🌿 Sanyas le lunga", optionB: "😭 Depression me chala jaunga" },
+                { type: 'poll', title: "Exam me bina padhe 90% lana", optionA: "🔥 Magical genius hoon main", optionB: "🧐 Cheating ka ilzaam lagega!" },
+                { type: 'poll', title: "Hamesha loud speaker par baat karna", optionA: "📢 Poori duniya sune meri baatein", optionB: "🤫 Shanti pasand hai mujhe" },
+                { type: 'poll', title: "Free unlimited pizza for life", optionA: "🍕 Roz party hi party!", optionB: "🥗 Doctor mana kar dega" },
+                { type: 'poll', title: "Bhoot ke sath ek raat rehna", optionA: "👻 Dost bana lunga", optionB: "🏃‍♂️ 100 ki speed se bhaagunga" },
+                { type: 'poll', title: "Apne ex ke sath 1 ghanta baat karna", optionA: "📞 Drama dekhne me maza aayega", optionB: "🚫 Block and delete forever" },
+                { type: 'poll', title: "Hamesha sach bolna", optionA: "😇 Honest boy/girl", optionB: "🤥 Thoda bohot jhoot zaroori hai" }
+            ],
+            'Excuse Maker': [
+                "Excuse 1: Sir, light chali gayi thi aur mere dimaag ka inverter bhi off ho gaya tha!",
+                "Excuse 2: Mummy ne bola pehle dhaniya laao, fir padhai karna!",
+                "Excuse 3: Mera phone automatic update par chala gaya tha aur 12 ghante lag gaye.",
+                "Excuse 4: Mere dog ne mera assignment PDF samajh kar delete kar diya!",
+                "Excuse 5: Sir, raste me alien spaceship ne mera rasta rok liya tha.",
+                "Excuse 6: Alarm ne dhokha diya sir, wo bajne ki jagah khud so gaya!",
+                "Excuse 7: Achanak se mere dimaag ka RAM full ho gaya tha, isliye crash ho gaya.",
+                "Excuse 8: Subah uthte hi mujhe mehsoos hua ki aaj grah nakshatra sahi nahi hain.",
+                "Excuse 9: Main toh aane wala tha par meri chappal tut gayi!",
+                "Excuse 10: Wifi ka signal mere room tak aate aate thak gaya tha."
+            ],
+            'Friendly Roast': [
+                "Roast 1: Tumhe dekh kar lagta hai ki evolution ne beech me hi break le liya tha!",
+                "Roast 2: Tumhara dimaag 4G network par bhi 2G speed se chalta hai.",
+                "Roast 3: Jitna dimaag tum me hai, utne me toh ek calculator bhi fail ho jaye.",
+                "Roast 4: Tumhari baat sun kar Google ne bhi search karna band kar diya.",
+                "Roast 5: Tumhara confidence dekh kar overconfidence ko bhi sharm aa jaye!",
+                "Roast 6: Tum itne silent ho ki lagta hai background noise chal raha hai.",
+                "Roast 7: Tumhe dekh kar lagta hai ki bhagwan ne tumhe F12 daba kar refresh karna bhool gaye.",
+                "Roast 8: Tumhare jokes itne thande hote hain ki fridge me rakhne ki zaroorat nahi.",
+                "Roast 9: Tumhari baat ka na koi head hota hai na tail, bas pure chaos hota hai!",
+                "Roast 10: Bhai tumhara attitude iPhone jaisa hai, par battery 1% hi rehti hai."
+            ],
+            'Random Mission': [
+                "Mission 1: Abhi turant apne kisi dost ko ek random emoji 🤡 bhejo bina kuch kahe!",
+                "Mission 2: Aaj 10 minute tak bina phone chooye shanti se baitho.",
+                "Mission 3: Apne Mummy/Papa ko jaakar bolo 'Aap duniya ke best ho' aur unka smile dekho.",
+                "Mission 4: Kisi purane dost ko message karo: 'Yaad hai wo din?' aur dekho wo kya bolta hai.",
+                "Mission 5: Aaj ek naya meme dhoondh kar apne story par lagao.",
+                "Mission 6: Apne phone ki gallery kholo aur 5th photo ko kisi dost ko bhejo.",
+                "Mission 7: 1 minute ke liye aakhein band karke bas gehari saans lo.",
+                "Mission 8: Apne favorite song ko full volume me 2 minute suno.",
+                "Mission 9: Aaj kisi ki bina kisi matlab ke tareef karo.",
+                "Mission 10: Apne room ki ek cheez ko perfectly jagah par rakho."
+            ]
+        };
 
-        // Try loading memes.json if available
+        let currentCategory = 'all';
+        let shownIndices = {}; // Prevent quick repeats tracker
+
         async function loadMemesData() {
             try {
                 const response = await fetch('memes.json');
@@ -377,6 +478,7 @@
 
         const chaosGenBtn = document.getElementById('chaosGenBtn');
         const chaosOutput = document.getElementById('chaosOutput');
+        const pollArea = document.getElementById('pollArea');
         const catChips = document.querySelectorAll('.cat-chip');
 
         catChips.forEach(chip => {
@@ -388,9 +490,25 @@
             });
         });
 
+        // Smart Random Selector with No-Repeat Logic
+        function getUniqueRandom(list, key) {
+            if (!shownIndices[key]) shownIndices[key] = [];
+            if (shownIndices[key].length >= list.length) {
+                shownIndices[key] = []; // Reset when all shown once
+            }
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * list.length);
+            } while (shownIndices[key].includes(randomIndex) && list.length > 1);
+
+            shownIndices[key].push(randomIndex);
+            return list[randomIndex];
+        }
+
         function generateChaos() {
+            pollArea.innerHTML = '';
             const list = getActiveList();
-            const randomMsg = list[Math.floor(Math.random() * list.length)];
+            const randomMsg = getUniqueRandom(list, 'cat_' + currentCategory);
             chaosOutput.textContent = `"${randomMsg}"`;
         }
 
@@ -399,7 +517,8 @@
         }
 
         document.getElementById('copyChaosBtn').addEventListener('click', () => {
-            navigator.clipboard.writeText(chaosOutput.textContent);
+            const textToCopy = chaosOutput.textContent + (pollArea.innerText ? "\n" + pollArea.innerText : "");
+            navigator.clipboard.writeText(textToCopy);
             alert('Copied to clipboard! 📋');
         });
 
@@ -407,19 +526,37 @@
             alert('Saved to favorites successfully! ⭐');
         });
 
+        // Trigger Mini-Games with Poll Support & No-Repeat System
         function triggerMiniGame(gameName) {
-            const gamePrompts = {
-                'Random Chaos': "Mission: Aaj bina kisi wajah ke ghar walo ke saamne hasna start karo aur reaction dekho!",
-                'Personality Test': "Result: Tumhara vibe 90% 'Professional Overthinker' aur 10% 'Chalta Hai' attitude wala hai!",
-                'Would You Rather': "Option A: Saari zindagi sirf maggi khana vs Option B: Bina internet ke ek saal rehna?",
-                'Excuse Maker': "Excuse: Sir, light chali gayi thi aur mere dimaag ka inverter bhi off ho gaya tha!",
-                'Friendly Roast': "Roast: Tumhe dekh kar lagta hai ki evolution ne beech me hi break le liya tha!",
-                'Random Mission': "Mission: Abhi turant apne kisi dost ko ek random emoji bhejo bina kuch kahe!"
-            };
-            chaosOutput.textContent = `[${gameName}] ${gamePrompts[gameName] || "Chaos loading..."}`;
+            pollArea.innerHTML = '';
+            const options = gamePromptsDatabase[gameName];
+            if (!options || options.length === 0) return;
+
+            const selected = getUniqueRandom(options, 'game_' + gameName);
+
+            if (gameName === 'Would You Rather' && typeof selected === 'object') {
+                chaosOutput.textContent = `[Would You Rather] ${selected.title}?`;
+                pollArea.innerHTML = `
+                    <div class="poll-container">
+                        <button class="poll-btn" onclick="votePoll(this, '78%')">A) ${selected.optionA}</button>
+                        <button class="poll-btn" onclick="votePoll(this, '22%')">B) ${selected.optionB}</button>
+                    </div>
+                `;
+            } else {
+                chaosOutput.textContent = `[${gameName}] ${selected}`;
+            }
         }
 
-        // Initialize on page load
+        function votePoll(btn, percentage) {
+            const buttons = pollArea.querySelectorAll('.poll-btn');
+            buttons.forEach(b => {
+                b.style.pointerEvents = 'none';
+                b.style.opacity = '0.7';
+            });
+            btn.style.background = 'var(--primary-purple)';
+            btn.innerHTML += ` ✅ <b>(${percentage} votes)</b>`;
+        }
+
         loadMemesData();
     </script>
 </body>
