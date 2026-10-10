@@ -48,7 +48,6 @@
             box-shadow: 0 0 35px rgba(157, 78, 221, 0.35);
         }
 
-        /* Top Header */
         .top-header {
             padding: 15px 20px;
             background: rgba(10, 2, 20, 0.9);
@@ -84,7 +83,6 @@
             margin-top: 2px;
         }
 
-        /* Main Scroll Area */
         .main-scroll {
             flex: 1;
             overflow-y: auto;
@@ -102,7 +100,6 @@
             border-radius: 4px;
         }
 
-        /* Hero Chaos Generator */
         .chaos-hero {
             background: var(--dark-glass);
             border: 1px solid var(--border-glass);
@@ -143,7 +140,6 @@
             transform: scale(0.96);
         }
 
-        /* Categories Chips (5 options: All, School Life, Savage Roasts, Relatable, Random) */
         .categories-scroll {
             display: flex;
             gap: 8px;
@@ -174,7 +170,6 @@
             box-shadow: 0 0 8px var(--primary-purple);
         }
 
-        /* Output Card */
         .chaos-card-output {
             background: rgba(15, 5, 25, 0.9);
             border: 1px solid var(--border-glass);
@@ -210,7 +205,6 @@
             cursor: pointer;
         }
 
-        /* Mini-Games Section */
         .section-title {
             font-size: 0.95rem;
             font-weight: 700;
@@ -256,24 +250,19 @@
 <body>
 
     <div class="container">
-        <!-- Top Header with Creator Credit -->
         <div class="top-header">
             <div class="brand-title">CHAOS.EXE</div>
             <div class="tagline">Aao Dimag Ka Dahi Karein 🔥</div>
             <div class="creator-credit">Created by Tony RaoSahab</div>
         </div>
 
-        <!-- Main Content Area -->
         <div class="main-scroll">
-            
-            <!-- Chaos Hero & Generator -->
             <div class="chaos-hero">
                 <h2>Boredom Destroyer</h2>
                 <p>Ek click aur saara stress gayab!</p>
                 <button class="chaos-btn" id="chaosGenBtn">⚡ Give Me Some Chaos</button>
             </div>
 
-            <!-- 5 Categories: All, School Life, Savage Roasts, Relatable, Random -->
             <div class="categories-scroll">
                 <button class="cat-chip active" data-cat="all">All</button>
                 <button class="cat-chip" data-cat="school">School Life</button>
@@ -282,7 +271,6 @@
                 <button class="cat-chip" data-cat="random">Random</button>
             </div>
 
-            <!-- Output Display Card -->
             <div class="chaos-card-output">
                 <div class="output-text" id="chaosOutput">
                     "Loading ultimate Indian internet chaos..."
@@ -293,7 +281,6 @@
                 </div>
             </div>
 
-            <!-- Mini-Games Hub (6 Activities requested) -->
             <div class="section-title">🎮 Choose Your Poison</div>
             <div class="minigames-grid">
                 <div class="game-card" onclick="triggerMiniGame('Random Chaos')">
@@ -321,39 +308,71 @@
                     <div class="game-name">Random Mission</div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
-        let allMemesData = {};
+        // Default Embedded Database (Guaranteed Working)
+        let allMemesData = {
+            school: [
+                "Backbencher ki superpower: Bina ek bhi shabd padhe viva me full confidence ke sath examiner ko convince karna.",
+                "Jab teacher bole 'Main puri class se poochungi' aur saari saansein thamm jayein.",
+                "School ki assembly me dhoop me khade hokar principal ka speech sunna ek alag hi tapasya thi.",
+                "Exam me jab 2 mark ka question na aaye toh us par 3 page ka essay aise likho jaise examiner tumhara saga chacha ho.",
+                "PT period cancel hone par poori class ka ek sath dukh manana.",
+                "Blackboard saaf karne ki punishment ko ek proud moment samajhna."
+            ],
+            savage: [
+                "Apne doston ko roast karna birthright hai, par koi aur kare toh khoon khol jata hai.",
+                "Log kehte hain 'Hard work beats talent', par kabhi lazy genius ko bina padhe topper bante dekha hai?",
+                "Tumhara gyaan dekh kar lagta hai ki Google ko bhi vacation par bhej dena chahiye.",
+                "Aapka confidence dekh kar lagta hai ki bewakoofi me PhD kar rakhi hai.",
+                "Jitna dimaag tumne mujhe gyaan dene me lagaya hai, utna lagate toh aaj tumhara khud ka startup hota."
+            ],
+            relatable: [
+                "Phone ki battery 1% hone par speedrun mode activate ho jata hai.",
+                "Online shopping me cart me 50 items add karne ke baad 'Cash on Delivery' par click karke order cancel kar dena.",
+                "Raat ko sone se pehle achanak 5 saal pehle ki gayi ek embarrassing yaad ka aana.",
+                "Fridge khol kar 10 minute tak khade rehna aur bina kuch liye band kar dena.",
+                "Mummy jab ghar me guests aane par alag hi level ki English bolne lagti hain."
+            ],
+            random: [
+                "Jab aapko lage ki aapki life set hai, tab achanak se relative ka phone aa jata hai: 'Beta, Sharma ji ke bete ko dekho!'",
+                "Raat ko 2 baje achanak yaad aata hai ki kal subah 8 baje project submission hai.",
+                "Life me itne dukh hain ki ab dukh bhi kehta hai 'Bhai ab main bhi thak gaya hoon'.",
+                "Mummy ka chappal wala weapon itna accurate hota hai ki GPS bhi fail ho jaye."
+            ]
+        };
+
         let currentCategory = 'all';
 
-        // Fetch memes dynamically from memes.json (Easy to update daily!)
+        // Try loading memes.json if available
         async function loadMemesData() {
             try {
                 const response = await fetch('memes.json');
-                allMemesData = await response.json();
-                generateChaos();
+                if(response.ok) {
+                    const jsonData = await response.json();
+                    if(jsonData && Object.keys(jsonData).length > 0) {
+                        allMemesData = jsonData;
+                    }
+                }
             } catch (error) {
-                // Fallback data if file takes a moment
-                allMemesData = {
-                    school: ["Backbencher ki superpower: Bina padhe viva clear karna."],
-                    savage: ["Tumhara gyaan dekh kar Google bhi confuse ho jaye."],
-                    relatable: ["Phone ki battery 1% hone par speedrun mode activate."],
-                    random: ["Jab life me kuch samajh na aaye, toh sojao!"]
-                };
-                generateChaos();
+                console.log("Using built-in memes database.");
             }
+            generateChaos();
         }
 
         function getActiveList() {
             if (currentCategory === 'all') {
                 let combined = [];
-                Object.values(allMemesData).forEach(arr => combined.push(...arr));
-                return combined.length > piercings = combined : ["Kuch naya aane wala hai!"];
+                Object.values(allMemesData).forEach(arr => {
+                    if(Array.isArray(arr)) combined.push(...arr);
+                });
+                return combined.length > 0 ? combined : ["Aao dimag ka dahi karein!"];
             }
-            return allMemesData[currentCategory] || ["Aao dimag ka dahi karein!"];
+            return (allMemesData[currentCategory] && allMemesData[currentCategory].length > 0) 
+                ? allMemesData[currentCategory] 
+                : ["Category update ho rahi hai!"];
         }
 
         const chaosGenBtn = document.getElementById('chaosGenBtn');
@@ -375,7 +394,9 @@
             chaosOutput.textContent = `"${randomMsg}"`;
         }
 
-        chaosGenBtn.addEventListener('click', generateChaos);
+        if(chaosGenBtn) {
+            chaosGenBtn.addEventListener('click', generateChaos);
+        }
 
         document.getElementById('copyChaosBtn').addEventListener('click', () => {
             navigator.clipboard.writeText(chaosOutput.textContent);
@@ -386,20 +407,19 @@
             alert('Saved to favorites successfully! ⭐');
         });
 
-        // Mini-Games Action Handlers
         function triggerMiniGame(gameName) {
             const gamePrompts = {
-                'Random Chaos': "Mission: Aaj bina kisi wajah ke ghar walo ke saamne hasna start karo aur reaction record karo!",
+                'Random Chaos': "Mission: Aaj bina kisi wajah ke ghar walo ke saamne hasna start karo aur reaction dekho!",
                 'Personality Test': "Result: Tumhara vibe 90% 'Professional Overthinker' aur 10% 'Chalta Hai' attitude wala hai!",
                 'Would You Rather': "Option A: Saari zindagi sirf maggi khana vs Option B: Bina internet ke ek saal rehna?",
                 'Excuse Maker': "Excuse: Sir, light chali gayi thi aur mere dimaag ka inverter bhi off ho gaya tha!",
                 'Friendly Roast': "Roast: Tumhe dekh kar lagta hai ki evolution ne beech me hi break le liya tha!",
-                'Random Mission': "Mission: Abhi turant apne kisi dost ko ek random random emoji bhejo bina kuch kahe!"
+                'Random Mission': "Mission: Abhi turant apne kisi dost ko ek random emoji bhejo bina kuch kahe!"
             };
             chaosOutput.textContent = `[${gameName}] ${gamePrompts[gameName] || "Chaos loading..."}`;
         }
 
-        // Initialize on load
+        // Initialize on page load
         loadMemesData();
     </script>
 </body>
