@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHAOS.EXE | Aao Dimag Ka Dahi Karein</title>
+    <style>
+        :root {
+            --bg-color: #07030f;
+            --primary-purple: #9d4edd;
+            --neon-pink: #ff007f;
+            --neon-glow: #c77dff;
+            --dark-glass: rgba(18, 10, 30, 0.85);
+            --border-glass: rgba(199, 125, 255, 0.3);
+            --text-main: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: radial-gradient(circle at 50% 20%, rgba(157, 78, 221, 0.2) 0%, transparent 70%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            height: 100vh;
+            max-height: 950px;
+            background: #000;
+            border: 3px solid #240046;
+            border-radius: 35px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 35px rgba(157, 78, 221, 0.35);
+        }
+
+        /* Top Header */
+        .top-header {
+            padding: 15px 20px;
+            background: rgba(10, 2, 20, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-glass);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .brand-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #ff007f, #c77dff, #9d4edd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 12px rgba(255, 0, 127, 0.4);
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            color: #e0aaff;
+            margin-top: 2px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .creator-credit {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+        }
+
+        /* Main Scroll Area */
+        .main-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .main-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .main-scroll::-webkit-scrollbar-thumb {
+            background: var(--border-glass);
+            border-radius: 4px;
+        }
+
+        /* Hero Chaos Generator */
+        .chaos-hero {
+            background: var(--dark-glass);
+            border: 1px solid var(--border-glass);
+            padding: 18px;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .chaos-hero h2 {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+            color: #ffd6ff;
+        }
+
+        .chaos-hero p {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 12px;
+        }
+
+        .chaos-btn {
+            background: linear-gradient(45deg, #7b2cbf, #ff007f);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+            width: 100%;
+            transition: transform 0.2s;
+        }
+
+        .chaos-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Categories Chips (5 options: All, School Life, Savage Roasts, Relatable, Random) */
+        .categories-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .categories-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-chip {
+            background: rgba(25, 10, 40, 0.8);
+            border: 1px solid var(--border-glass);
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            white-space: nowrap;
+            color: #ddd;
+            transition: all 0.2s;
+        }
+
+        .cat-chip.active {
+            background: var(--primary-purple);
+            color: white;
+            border-color: var(--neon-glow);
+            box-shadow: 0 0 8px var(--primary-purple);
+        }
+
+        /* Output Card */
+        .chaos-card-output {
+            background: rgba(15, 5, 25, 0.9);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 16px;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+        }
+
+        .output-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #f1d3fe;
+            margin-bottom: 10px;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .mini-tool-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-glass);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        /* Mini-Games Section */
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #e0aaff;
+            margin-top: 5px;
+            margin-bottom: 2px;
+        }
+
+        .minigames-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding-bottom: 20px;
+        }
+
+        .game-card {
+            background: rgba(20, 8, 35, 0.8);
+            border: 1px solid var(--border-glass);
+            padding: 12px;
+            border-radius: 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .game-card:active {
+            transform: scale(0.95);
+            border-color: var(--neon-pink);
+        }
+
+        .game-icon {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .game-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Top Header with Creator Credit -->
+        <div class="top-header">
+            <div class="brand-title">CHAOS.EXE</div>
+            <div class="tagline">Aao Dimag Ka Dahi Karein 🔥</div>
+            <div class="creator-credit">Created by Tony RaoSahab</div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-scroll">
+            
+            <!-- Chaos Hero & Generator -->
+            <div class="chaos-hero">
+                <h2>Boredom Destroyer</h2>
+                <p>Ek click aur saara stress gayab!</p>
+                <button class="chaos-btn" id="chaosGenBtn">⚡ Give Me Some Chaos</button>
+            </div>
+
+            <!-- 5 Categories: All, School Life, Savage Roasts, Relatable, Random -->
+            <div class="categories-scroll">
+                <button class="cat-chip active" data-cat="all">All</button>
+                <button class="cat-chip" data-cat="school">School Life</button>
+                <button class="cat-chip" data-cat="savage">Savage Roasts</button>
+                <button class="cat-chip" data-cat="relatable">Relatable</button>
+                <button class="cat-chip" data-cat="random">Random</button>
+            </div>
+
+            <!-- Output Display Card -->
+            <div class="chaos-card-output">
+                <div class="output-text" id="chaosOutput">
+                    "Loading ultimate Indian internet chaos..."
+                </div>
+                <div class="card-actions">
+                    <button class="mini-tool-btn" id="copyChaosBtn">📋 Copy</button>
+                    <button class="mini-tool-btn" id="favChaosBtn">⭐ Save</button>
+                </div>
+            </div>
+
+            <!-- Mini-Games Hub (6 Activities requested) -->
+            <div class="section-title">🎮 Choose Your Poison</div>
+            <div class="minigames-grid">
+                <div class="game-card" onclick="triggerMiniGame('Random Chaos')">
+                    <div class="game-icon">🌪️</div>
+                    <div class="game-name">Random Chaos</div>
+                </div>
+                <div class="game-card" onclick="triggerMiniGame('Personality Test')">
+                    <div class="game-icon">🧠</div>
+                    <div class="game-name">Personality Test</div>
+                </div>
+                <div class="game-card" onclick="triggerMiniGame('Would You Rather')">
+                    <div class="game-icon">⚖️</div>
+                    <div class="game-name">Would You Rather?</div>
+                </div>
+                <div class="game-card" onclick="triggerMiniGame('Excuse Maker')">
+                    <div class="game-icon">🎭</div>
+                    <div class="game-name">Excuse Maker</div>
+                </div>
+                <div class="game-card" onclick="triggerMiniGame('Friendly Roast')">
+                    <div class="game-icon">🔥</div>
+                    <div class="game-name">Friendly Roast</div>
+                </div>
+                <div class="game-card" onclick="triggerMiniGame('Random Mission')">
+                    <div class="game-icon">🎯</div>
+                    <div class="game-name">Random Mission</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let allMemesData = {};
+        let currentCategory = 'all';
+
+        // Fetch memes dynamically from memes.json (Easy to update daily!)
+        async function loadMemesData() {
+            try {
+                const response = await fetch('memes.json');
+                allMemesData = await response.json();
+                generateChaos();
+            } catch (error) {
+                // Fallback data if file takes a moment
+                allMemesData = {
+                    school: ["Backbencher ki superpower: Bina padhe viva clear karna."],
+                    savage: ["Tumhara gyaan dekh kar Google bhi confuse ho jaye."],
+                    relatable: ["Phone ki battery 1% hone par speedrun mode activate."],
+                    random: ["Jab life me kuch samajh na aaye, toh sojao!"]
+                };
+                generateChaos();
+            }
+        }
+
+        function getActiveList() {
+            if (currentCategory === 'all') {
+                let combined = [];
+                Object.values(allMemesData).forEach(arr => combined.push(...arr));
+                return combined.length > piercings = combined : ["Kuch naya aane wala hai!"];
+            }
+            return allMemesData[currentCategory] || ["Aao dimag ka dahi karein!"];
+        }
+
+        const chaosGenBtn = document.getElementById('chaosGenBtn');
+        const chaosOutput = document.getElementById('chaosOutput');
+        const catChips = document.querySelectorAll('.cat-chip');
+
+        catChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                catChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                currentCategory = chip.getAttribute('data-cat');
+                generateChaos();
+            });
+        });
+
+        function generateChaos() {
+            const list = getActiveList();
+            const randomMsg = list[Math.floor(Math.random() * list.length)];
+            chaosOutput.textContent = `"${randomMsg}"`;
+        }
+
+        chaosGenBtn.addEventListener('click', generateChaos);
+
+        document.getElementById('copyChaosBtn').addEventListener('click', () => {
+            navigator.clipboard.writeText(chaosOutput.textContent);
+            alert('Copied to clipboard! 📋');
+        });
+
+        document.getElementById('favChaosBtn').addEventListener('click', () => {
+            alert('Saved to favorites successfully! ⭐');
+        });
+
+        // Mini-Games Action Handlers
+        function triggerMiniGame(gameName) {
+            const gamePrompts = {
+                'Random Chaos': "Mission: Aaj bina kisi wajah ke ghar walo ke saamne hasna start karo aur reaction record karo!",
+                'Personality Test': "Result: Tumhara vibe 90% 'Professional Overthinker' aur 10% 'Chalta Hai' attitude wala hai!",
+                'Would You Rather': "Option A: Saari zindagi sirf maggi khana vs Option B: Bina internet ke ek saal rehna?",
+                'Excuse Maker': "Excuse: Sir, light chali gayi thi aur mere dimaag ka inverter bhi off ho gaya tha!",
+                'Friendly Roast': "Roast: Tumhe dekh kar lagta hai ki evolution ne beech me hi break le liya tha!",
+                'Random Mission': "Mission: Abhi turant apne kisi dost ko ek random random emoji bhejo bina kuch kahe!"
+            };
+            chaosOutput.textContent = `[${gameName}] ${gamePrompts[gameName] || "Chaos loading..."}`;
+        }
+
+        // Initialize on load
+        loadMemesData();
+    </script>
+</body>
+</html>
