@@ -339,36 +339,7 @@
     </div>
 
     <script>
-        let allMemesData = {
-            school: [
-                "Backbencher ki superpower: Bina ek bhi shabd padhe viva me full confidence ke sath examiner ko convince karna.",
-                "Jab teacher bole 'Main puri class se poochungi' aur saari saansein thamm jayein.",
-                "School ki assembly me dhoop me khade hokar principal ka speech sunna ek alag hi tapasya thi.",
-                "Exam me jab 2 mark ka question na aaye toh us par 3 page ka essay aise likho jaise examiner tumhara saga chacha ho.",
-                "PT period cancel hone par poori class ka ek sath dukh manana.",
-                "Blackboard saaf karne ki punishment ko ek proud moment samajhna."
-            ],
-            savage: [
-                "Apne doston ko roast karna birthright hai, par koi aur kare toh khoon khol jata hai.",
-                "Log kehte hain 'Hard work beats talent', par kabhi lazy genius ko bina padhe topper bante dekha hai?",
-                "Tumhara gyaan dekh kar lagta hai ki Google ko bhi vacation par bhej dena chahiye.",
-                "Aapka confidence dekh kar lagta hai ki bewakoofi me PhD kar rakhi hai.",
-                "Jitna dimaag tumne mujhe gyaan dene me lagaya hai, utna lagate toh aaj tumhara khud ka startup hota."
-            ],
-            relatable: [
-                "Phone ki battery 1% hone par speedrun mode activate ho jata hai.",
-                "Online shopping me cart me 50 items add karne ke baad 'Cash on Delivery' par click karke order cancel kar dena.",
-                "Raat ko sone se pehle achanak 5 saal pehle ki gayi ek embarrassing yaad ka aana.",
-                "Fridge khol kar 10 minute tak khade rehna aur bina kuch liye band kar dena.",
-                "Mummy jab ghar me guests aane par alag hi level ki English bolne lagti hain."
-            ],
-            random: [
-                "Jab aapko lage ki aapki life set hai, tab achanak se relative ka phone aa jata hai: 'Beta, Sharma ji ke bete ko dekho!'",
-                "Raat ko 2 baje achanak yaad aata hai ki kal subah 8 baje project submission hai.",
-                "Life me itne dukh hain ki ab dukh bhi kehta hai 'Bhai ab main bhi thak gaya hoon'.",
-                "Mummy ka chappal wala weapon itna accurate hota hai ki GPS bhi fail ho jaye."
-            ]
-        };
+        let allMemesData = {};
 
         const gamePromptsDatabase = {
             'Random Chaos': [
@@ -381,7 +352,17 @@
                 "Chaos 7: Aaj subah uthte hi sabse pehle 5 baar zor se bolo 'Main Hero Hoon!'.",
                 "Chaos 8: Apne best friend ko ek mysterious wala emoji 🗿 bhejo aur kuch mat bolo.",
                 "Chaos 9: Apne status par likho 'Big news coming soon...' aur 24 ghante tak shaant raho.",
-                "Chaos 10: Aaj pure din me har baat ke baad bolo 'Par isme mera kya fayda?'"
+                "Chaos 10: Aaj pure din me har baat ke baad bolo 'Par isme mera kya fayda?'.",
+                "Chaos 11: Apne phone ki gallery me jaakar sabse pehli photo ko apni WhatsApp DP bana lo.",
+                "Chaos 12: Kisi anjaan number par 'Wrong number, secret package deliver ho gaya hai' ka message bhejo.",
+                "Chaos 13: Ghar ke sabhi rooms ki lights off karke achanak se 'Bhoot aaya!' chillao.",
+                "Chaos 14: Apne dost ko bina kisi baat ke 100 rupaye ka Google Pay karo aur note likho 'Chhipane ke liye'.",
+                "Chaos 15: Ek ghante tak bina internet ke baith kar khidki se bahar aise dekho jaise koi movie chal rahi ho.",
+                "Chaos 16: Apne kisi purane teacher ko random message karo 'Sir aapne mujhe zindagi me bahut kuch sikhaya'.",
+                "Chaos 17: Pure din me sirf Punjabi gaane full volume me suno chahe samajh aaye ya na aaye.",
+                "Chaos 18: Apne laptop ya phone ka wallpaper koi ajeeb sa funny meme laga lo.",
+                "Chaos 19: Momos wale ke paas jaakar bolo 'Bhaiya ek plate extra teekhi chatni bina momos ke dena'.",
+                "Chaos 20: Raat ko sone se pehle apne saare social media apps uninstll karke subah fir se install karo."
             ],
             'Personality Test': [
                 "Result: Tumhara vibe 90% 'Professional Overthinker' aur 10% 'Chalta Hai' attitude wala hai!",
@@ -393,7 +374,17 @@
                 "Result: Tum Main Character Energy rakhte ho, bas budget thoda kam hai!",
                 "Result: Tumhare andar ka Detective hamesha doosron ki Insta stalk karne me busy rehta hai.",
                 "Result: Personality: 'Night Owl'—Raat ko 3 baje poori duniya jeetne ka plan banate ho.",
-                "Result: Tum ek Walking Entertainment Center ho, doston ki jaan ho!"
+                "Result: Tum ek Walking Entertainment Center ho, doston ki jaan ho!",
+                "Result: Tumhara level 'Professional Procrastinator' hai—Kal kare so aaj kar, aaj kare so abhi... par main kal karunga!",
+                "Result: Tumhara attitude 'Single and Ready to Mingle with Memes' wala hai!",
+                "Result: Tum 99% Sarcastic aur 1% emotional ho, wo bhi galti se!",
+                "Result: Tumhara mood ek weather app jaisa hai—har 5 minute me badalta hai!",
+                "Result: Tumhara akelepan ka level expert category ka hai, tumhe kisi ki zaroorat nahi bas WiFi chahiye!",
+                "Result: Tum 100% 'Cinematic Dreamer' ho, bed par let kar khud ko movie ka hero samajhte ho.",
+                "Result: Tumhara dimaag ek open browser tab jaisa hai jisme 50 tabs chal rahe hain aur pata nahi kahan se aawaz aa rahi hai.",
+                "Result: Tumhara style 'Zero Effort, Maximum Impact' wala hai!",
+                "Result: Tum 50% Drama Queen/King aur 50% Chill Insaan ho.",
+                "Result: Tumhara ultimate life motto hai: 'Jaisi karni, waisi bharni, par abhi sone do'."
             ],
             'Would You Rather': [
                 { type: 'poll', title: "Saari zindagi sirf maggi khana", optionA: "🍔 Haa, bas maggi hi maggi!", optionB: "❌ Nahi bhai, roti sabji chahiye!" },
@@ -405,7 +396,17 @@
                 { type: 'poll', title: "Free unlimited pizza for life", optionA: "🍕 Roz party hi party!", optionB: "🥗 Doctor mana kar dega" },
                 { type: 'poll', title: "Bhoot ke sath ek raat rehna", optionA: "👻 Dost bana lunga", optionB: "🏃‍♂️ 100 ki speed se bhaagunga" },
                 { type: 'poll', title: "Apne ex ke sath 1 ghanta baat karna", optionA: "📞 Drama dekhne me maza aayega", optionB: "🚫 Block and delete forever" },
-                { type: 'poll', title: "Hamesha sach bolna", optionA: "😇 Honest boy/girl", optionB: "🤥 Thoda bohot jhoot zaroori hai" }
+                { type: 'poll', title: "Hamesha sach bolna", optionA: "😇 Honest boy/girl", optionB: "🤥 Thoda bohot jhoot zaroori hai" },
+                { type: 'poll', title: "Hamesha bina chappal ke bahar chalna", optionA: "👣 Iron feet challenge", optionB: "🩴 Chappal is emotion" },
+                { type: 'poll', title: "Apna pura internet history public karna", optionA: "😱 Main doob marunga", optionB: "😎 Kuch nahi chhupana" },
+                { type: 'poll', title: "Saari zindagi sirf ek hi gaana sunna", optionA: "🎵 Favourite song forever", optionB: "🤯 Paagal ho jaunga" },
+                { type: 'poll', title: "Bina AC/Fan ke garmi me rehna", optionA: "🔥 Tapasya mode on", optionB: "❄️ AC ke bina jeena impossible" },
+                { type: 'poll', title: "Apne sare doston ke samne apni diary padhwana", optionA: "📖 Open book policy", optionB: "🔒 Secret forever" },
+                { type: 'poll', title: "Hamesha ulta chalna", optionA: "🤸‍♂️ Unique talent", optionB: "🚶‍♂️ Normal chalna hi thik hai" },
+                { type: 'poll', title: "1 hafte tak bina nahaye rehna", optionA: "🧼 Winter survival mode", optionB: "💧 Roz nahana zaroori hai" },
+                { type: 'poll', title: "Apne phone ka password hamesha ke liye bhool jana", optionA: "🔐 Digital sanyas", optionB: "📱 Phone meri jaan hai" },
+                { type: 'poll', title: "Sirf ek hi color ke kapde pehnna zindagi bhar", optionA: "🎨 Cartoon character style", optionB: "👕 Variety chahiye" },
+                { type: 'poll', title: "Kahin bhi achanak so jana kahin bhi", optionA: "😴 Kumbhkaran vibes", optionB: "⏰ Alert insaan" }
             ],
             'Excuse Maker': [
                 "Excuse 1: Sir, light chali gayi thi aur mere dimaag ka inverter bhi off ho gaya tha!",
@@ -417,7 +418,17 @@
                 "Excuse 7: Achanak se mere dimaag ka RAM full ho gaya tha, isliye crash ho gaya.",
                 "Excuse 8: Subah uthte hi mujhe mehsoos hua ki aaj grah nakshatra sahi nahi hain.",
                 "Excuse 9: Main toh aane wala tha par meri chappal tut gayi!",
-                "Excuse 10: Wifi ka signal mere room tak aate aate thak gaya tha."
+                "Excuse 10: Wifi ka signal mere room tak aate aate thak gaya tha.",
+                "Excuse 11: Sir, subah uthte hi raste me ek billi ne rasta kaat diya tha isliye 2 ghante wahi khada rehna pada.",
+                "Excuse 12: Mummy ne achanak se room lock kar diya tha aur keys dhoondhne me pura din nikal gaya.",
+                "Excuse 13: Mera WhatsApp hack ho gaya tha isliye main message ka reply nahi kar paya.",
+                "Excuse 14: Sir, internet speed itni slow thi ki file upload hote hote kal ki date ho gayi.",
+                "Excuse 15: Main subah se padhne baitha hi tha ki achanak se relatives aa gaye aur unke sath baithna pada.",
+                "Excuse 16: Meri watch ki battery slow ho gayi thi isliye mujhe laga abhi subah ke 6 hi baje hain.",
+                "Excuse 17: Raste me ek stray dog ne mujhe gher liya tha, fir mujhe 20 minute tak use biscuit khilana pada.",
+                "Excuse 18: Sir, mere laptop ka blue screen of death aa gaya tha, ab main kya karta?",
+                "Excuse 19: Main subah time par utha tha par gravity itni zyada thi ki bed se uth hi nahi paya.",
+                "Excuse 20: Phone ki battery 0% ho gayi thi aur charger ka switch kharab ho gaya tha."
             ],
             'Friendly Roast': [
                 "Roast 1: Tumhe dekh kar lagta hai ki evolution ne beech me hi break le liya tha!",
@@ -429,7 +440,17 @@
                 "Roast 7: Tumhe dekh kar lagta hai ki bhagwan ne tumhe F12 daba kar refresh karna bhool gaye.",
                 "Roast 8: Tumhare jokes itne thande hote hain ki fridge me rakhne ki zaroorat nahi.",
                 "Roast 9: Tumhari baat ka na koi head hota hai na tail, bas pure chaos hota hai!",
-                "Roast 10: Bhai tumhara attitude iPhone jaisa hai, par battery 1% hi rehti hai."
+                "Roast 10: Bhai tumhara attitude iPhone jaisa hai, par battery 1% hi rehti hai.",
+                "Roast 11: Tumhe dekh kar lagta hai ki autocorrect bhi tumhare sath suicide karne ki soch raha hai.",
+                "Roast 12: Tumhara logic dekh kar Einstein bhi apni grave se uth kar wapas sone chale jayenge.",
+                "Roast 13: Bhai tu itna lazy hai ki agar laziness ka competition ho toh tu usme bhi haar jaye kyuki tu aane me aalas karega.",
+                "Roast 14: Tumhari shakal dekh kar lagta hai ki filter ki bhi ek limit hoti hai.",
+                "Roast 15: Tumse baat karna matlab ek aisi movie dekhna jiska climax pehle se hi pata ho ki bore karegi.",
+                "Roast 16: Tumhara dimaag bilkul unread notifications jaisa hai - bhara pada hai par kisi kaam ka nahi.",
+                "Roast 17: Bhai tu jab bhi serious hota hai, comedy apne aap shuru ho jati hai.",
+                "Roast 18: Tumhara fashion sense dekh kar lagta hai ki kapde andhere me pehne the.",
+                "Roast 19: Tumhe dekh kar lagta hai ki common sense ka stock tumhare liye hamesha 'Out of Stock' hi rehta hai.",
+                "Roast 20: Tumhari baaton me itna weight hota hai ki sunte hi sar dard shuru ho jata hai."
             ],
             'Random Mission': [
                 "Mission 1: Abhi turant apne kisi dost ko ek random emoji 🤡 bhejo bina kuch kahe!",
@@ -441,7 +462,17 @@
                 "Mission 7: 1 minute ke liye aakhein band karke bas gehari saans lo.",
                 "Mission 8: Apne favorite song ko full volume me 2 minute suno.",
                 "Mission 9: Aaj kisi ki bina kisi matlab ke tareef karo.",
-                "Mission 10: Apne room ki ek cheez ko perfectly jagah par rakho."
+                "Mission 10: Apne room ki ek cheez ko perfectly jagah par rakho.",
+                "Mission 11: Apne phone ka wallpaper badal kar koi funny solid color laga lo.",
+                "Mission 12: Apne kisi dost ko call karke bina bole 10 second tak haso aur phone cut kar do.",
+                "Mission 13: Aaj ka poora din bina ek bhi complain kiye guzaarne ki koshish karo.",
+                "Mission 14: Apne room ke mirror ke samne khade hokar khud ko ek motivational speech do.",
+                "Mission 15: Ek glass thanda paani piyo aur deep breath lo.",
+                "Mission 16: Apne phone ki saari unnecessary notifications ko clear karke saaf karo.",
+                "Mission 17: Kisi ko ek unexpected thank you message bhejo jisne tumhari kabhi help ki ho.",
+                "Mission 18: Apne table ya desk ko 5 minute me ekdum clean aur organized banao.",
+                "Mission 19: 5 minute ke liye bina kuch soche bas ceiling ko dekhte raho.",
+                "Mission 20: Apne favorite snacks ka ek packet khol kar chill karo aur code/work enjoy karo."
             ]
         };
 
@@ -456,9 +487,29 @@
                     if(jsonData && Object.keys(jsonData).length > 0) {
                         allMemesData = jsonData;
                     }
+                } else {
+                    throw new Error("JSON not found, using fallback");
                 }
             } catch (error) {
-                console.log("Using built-in memes database.");
+                // Fallback inline data if memes.json is missing
+                allMemesData = {
+                    school: [
+                        "Backbencher ki superpower: Bina ek bhi shabd padhe viva me full confidence ke sath examiner ko convince karna.",
+                        "Jab teacher bole 'Main puri class se poochungi' aur saari saansein thamm jayein."
+                    ],
+                    savage: [
+                        "Apne doston ko roast karna birthright hai, par koi aur kare toh khoon khol jata hai.",
+                        "Tumhara gyaan dekh kar lagta hai ki Google ko bhi vacation par bhej dena chahiye."
+                    ],
+                    relatable: [
+                        "Phone ki battery 1% hone par speedrun mode activate ho jata hai.",
+                        "Fridge khol kar 10 minute tak khade rehna aur bina kuch liye band kar dena."
+                    ],
+                    random: [
+                        "Jab aapko lage ki aapki life set hai, tab achanak se relative ka phone aa jata hai: 'Beta, Sharma ji ke bete ko dekho!'",
+                        "Raat ko 2 baje achanak yaad aata hai ki kal subah 8 baje project submission hai."
+                    ]
+                };
             }
             generateChaos();
         }
